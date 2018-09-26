@@ -21,8 +21,8 @@ type Stock interface {
 	// NetworkOperator returns the network operator asset object
 	NetworkOperator() asset.Asset
 
-	// DNSOperator returns the dns operator asset object
-	DNSOperator() asset.Asset
+	// ClusterDNSOperator returns the cluster dns operator asset object
+	ClusterDNSOperator() asset.Asset
 
 	// KubeAddonOperator returns the addon asset object
 	KubeAddonOperator() asset.Asset
@@ -40,7 +40,7 @@ type StockImpl struct {
 	clusterVersionOperator asset.Asset
 	kubeCoreOperator       asset.Asset
 	networkOperator        asset.Asset
-	dnsOperator            asset.Asset
+	clusterDNSOperator     asset.Asset
 	addonOperator          asset.Asset
 	mao                    asset.Asset
 	tectonic               asset.Asset
@@ -78,7 +78,7 @@ func (s *StockImpl) EstablishStock(stock installconfig.Stock, tlsStock tls.Stock
 	s.networkOperator = &networkOperator{
 		installConfigAsset: stock.InstallConfig(),
 	}
-	s.dnsOperator = &dnsOperator{
+	s.clusterDNSOperator = &clusterDNSOperator{
 		installConfigAsset: stock.InstallConfig(),
 	}
 	s.mao = &machineAPIOperator{
@@ -106,8 +106,8 @@ func (s *StockImpl) KubeCoreOperator() asset.Asset { return s.kubeCoreOperator }
 // NetworkOperator returns the network operator asset object
 func (s *StockImpl) NetworkOperator() asset.Asset { return s.networkOperator }
 
-// DNSOperator returns the dns operator asset object
-func (s *StockImpl) DNSOperator() asset.Asset { return s.dnsOperator }
+// ClusterDNSOperator returns the dns operator asset object
+func (s *StockImpl) ClusterDNSOperator() asset.Asset { return s.clusterDNSOperator }
 
 // KubeAddonOperator returns the addon operator asset object
 func (s *StockImpl) KubeAddonOperator() asset.Asset { return s.addonOperator }
