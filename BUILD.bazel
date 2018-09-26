@@ -29,7 +29,7 @@ genrule(
     output_to_bindir = 1,
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_prefix")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_prefix")
 
 go_prefix("github.com/openshift/installer")
 
@@ -137,4 +137,24 @@ gen_test(
         ":terraform_files",
         ":terraform_runtime_fmt",
     ],
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "f1.go",
+        "test-dns-op.go",
+    ],
+    importpath = "github.com/openshift/installer",
+    deps = [
+        "//pkg/asset:go_default_library",
+        "//pkg/asset/installconfig:go_default_library",
+        "//pkg/asset/manifests:go_default_library",
+        "//pkg/asset/stock:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "installer",
+    embed = [":go_default_library"],
 )
